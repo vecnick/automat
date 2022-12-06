@@ -17,10 +17,10 @@ public class Position {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotEmpty(message = "position should not be empty")
-    @Column(name = "position")
+    @NotEmpty(message = "position name should not be empty")
+    @Column(name = "name")
     @NonNull
-    private String position;
+    private String name;
 
     @OneToMany(mappedBy = "position")
     private List<Staff> staffs;
