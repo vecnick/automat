@@ -4,9 +4,11 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @NoArgsConstructor
 @Data
+@ToString(exclude = {"staffs"},includeFieldNames = false)
 @Entity
 @Table(name="position")
 public class Position {
@@ -19,4 +21,7 @@ public class Position {
     @Column(name = "position")
     @NonNull
     private String position;
+
+    @OneToMany(mappedBy = "position")
+    private List<Staff> staffs;
 }

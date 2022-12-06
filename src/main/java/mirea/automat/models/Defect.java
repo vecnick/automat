@@ -4,9 +4,11 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @NoArgsConstructor
 @Data
+@ToString(exclude = {"qualities"},includeFieldNames = false)
 @Entity
 @Table(name="defect")
 public class Defect {
@@ -19,4 +21,7 @@ public class Defect {
     @Column(name = "defect_case")
     @NonNull
     private String defectCase;
+
+    @OneToMany(mappedBy = "defect")
+    private List<Quality> qualities;
 }

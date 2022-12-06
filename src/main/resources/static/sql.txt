@@ -64,6 +64,5 @@ CREATE TABLE "Order" (
         date TIMESTAMP,
         cloth_id int REFERENCES cloth(id) ON DELETE SET NULL,
         consumer_id int REFERENCES consumer(id) ON DELETE SET NULL,
-        staff_id int REFERENCES safetyRules(id) ON DELETE SET NULL,
-        rule_id int REFERENCES safety_rule(id) ON DELETE SET NULL
+        staff_id int REFERENCES staff(id) ON DELETE SET NULL,
 );

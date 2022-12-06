@@ -1,7 +1,7 @@
 package mirea.automat.services;
 
-import mirea.automat.models.SafetyRules;
-import mirea.automat.repositories.SafetyRulessRepository;
+import mirea.automat.models.Staff;
+import mirea.automat.repositories.StaffsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,28 +11,28 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 public class StaffsService {
-    private final SafetyRulessRepository staffsRepository;
+    private final StaffsRepository staffsRepository;
 
-    public StaffsService(SafetyRulessRepository staffsRepository) {
+    public StaffsService(StaffsRepository staffsRepository) {
         this.staffsRepository = staffsRepository;
     }
 
-    public List<SafetyRules> findAll(){
+    public List<Staff> findAll(){
         return staffsRepository.findAll();
     }
 
-    public SafetyRules findOne(int id){
-        Optional<SafetyRules> foundPerson =  staffsRepository.findById(id);
+    public Staff findOne(int id){
+        Optional<Staff> foundPerson =  staffsRepository.findById(id);
         return foundPerson.orElse(null);
     }
 
     @Transactional
-    public void save(SafetyRules staff){
+    public void save(Staff staff){
         staffsRepository.save(staff);
     }
 
     @Transactional
-    public void update(int id, SafetyRules updatedStaff){
+    public void update(int id, Staff updatedStaff){
         updatedStaff.setId(id);
         staffsRepository.save(updatedStaff);
     }

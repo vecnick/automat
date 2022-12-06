@@ -1,6 +1,6 @@
 package mirea.automat.controllers;
 
-import mirea.automat.models.SafetyRules;
+import mirea.automat.models.Staff;
 import mirea.automat.services.StaffsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,12 +31,12 @@ public class StaffsController {
     }
 
     @GetMapping("/new")
-    public String newStaff(@ModelAttribute("staff") SafetyRules staff) {
+    public String newStaff(@ModelAttribute("staff") Staff staff) {
         return "staffs/new";
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("staff") @Valid SafetyRules staff,
+    public String create(@ModelAttribute("staff") @Valid Staff staff,
                          BindingResult bindingResult) {
 
         if (bindingResult.hasErrors())
@@ -53,7 +53,7 @@ public class StaffsController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("staff") @Valid SafetyRules staff, BindingResult bindingResult,
+    public String update(@ModelAttribute("staff") @Valid Staff staff, BindingResult bindingResult,
                          @PathVariable("id") int id) {
         if (bindingResult.hasErrors())
             return "staffs/edit";
