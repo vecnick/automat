@@ -21,7 +21,6 @@ public class TextilesController {
     @GetMapping()
     public String index(Model model) {
         model.addAttribute("textiles", textilesService.findAll());
-        System.out.println(textilesService.findAll());
         return "textiles/index";
     }
 
@@ -67,5 +66,9 @@ public class TextilesController {
     public String delete(@PathVariable("id") int id) {
         textilesService.delete(id);
         return "redirect:/textiles";
+    }
+    @GetMapping("/test")
+    public String index() {
+        return "login";
     }
 }
