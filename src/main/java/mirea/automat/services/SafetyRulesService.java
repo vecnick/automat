@@ -22,8 +22,8 @@ public class SafetyRulesService {
     }
 
     public SafetyRule findOne(int id){
-        Optional<SafetyRule> foundPerson =  safetyRulesRepository.findById(id);
-        return foundPerson.orElse(null);
+        Optional<SafetyRule> foundRule =  safetyRulesRepository.findById(id);
+        return foundRule.orElse(null);
     }
 
     @Transactional

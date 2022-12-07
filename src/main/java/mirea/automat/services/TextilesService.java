@@ -22,8 +22,8 @@ public class TextilesService {
     }
 
     public Textile findOne(int id){
-        Optional<Textile> foundPerson =  textilesRepository.findById(id);
-        return foundPerson.orElse(null);
+        Optional<Textile> foundTextile =  textilesRepository.findById(id);
+        return foundTextile.orElse(null);
     }
 
     @Transactional
