@@ -1,6 +1,7 @@
 package mirea.automat.controllers;
 
 import mirea.automat.models.Person;
+import mirea.automat.services.AdminsService;
 import mirea.automat.services.RegistrationService;
 import mirea.automat.util.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,13 @@ import javax.validation.Valid;
 public class AuthController {
 
 
+    private final AdminsService adminsService;
     private final PersonValidator personValidator;
     private final RegistrationService registrationService;
 
     @Autowired
-    public AuthController(PersonValidator personValidator, RegistrationService registrationService) {
+    public AuthController(AdminsService adminsService, PersonValidator personValidator, RegistrationService registrationService) {
+        this.adminsService = adminsService;
         this.personValidator = personValidator;
         this.registrationService = registrationService;
     }
@@ -48,5 +51,12 @@ public class AuthController {
         registrationService.register(person);
 
         return "redirect:/auth/login";
+    }
+
+
+    @GetMapping("/admin")
+    public  String adminPage(){
+        adminsService.doAdminStaff();
+        return "/auth/admin";
     }
 }
