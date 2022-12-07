@@ -67,8 +67,4 @@ public class TextilesController {
         textilesService.delete(id);
         return "redirect:/textiles";
     }
-    @GetMapping("/test")
-    public String index() {
-        return "login";
-    }
 }

@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Все текстили</title>
+    <form th:action="@{/logout}" th:method="POST">
+        <input type="submit" value="Logout">
+    </form>
+
 </head>
 <body>
 
 <div th:each="textile : ${textiles}">
     <a th:href="@{/textiles/{id}(id=${textile.getId()})}"
-       th:text="${textile.getName()}">status</a>
+       th:text="${textile.getName()}">textile</a>
 </div>
 <br/>
 <hr/>

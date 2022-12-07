@@ -29,7 +29,7 @@ public class Person {
     @Column(name = "year_of_birth")
     @Min(value = 1900, message = "Не врите, вам не 120 лет")
     @NonNull
-    private String year;
+    private int year;
 
     @Column(name = "password")
     private String password;
