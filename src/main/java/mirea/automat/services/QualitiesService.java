@@ -2,6 +2,7 @@ package mirea.automat.services;
 
 import mirea.automat.models.Quality;
 import mirea.automat.models.SafetyRule;
+import mirea.automat.models.Textile;
 import mirea.automat.repositories.QualitiesRepository;
 import mirea.automat.repositories.SafetyRulesRepository;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,10 @@ public class QualitiesService {
     @Transactional
     public void delete(int id){
         qualitiesRepository.deleteById(id);
+    }
+
+    public List<Quality> searchByName(String query) {
+        return qualitiesRepository.findByConditionStartingWith(query);
     }
 
     public void test(){

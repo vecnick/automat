@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Ищем</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/textiles/search}">
+  <label for="query">Введите поисковой запрос: </label>
+  <input type="text" id="query" name="query"/>
+  <br/>
+  <input type="submit" value="Искать!"/>
+</form>
+
+<div th:if="${textiles}">
+  <div th:if="${textiles.isEmpty()}">
+    <span>текстилей не найдено</span>
+  </div>
+
+  <div th:each="textile : ${textiles}">
+    <p th:text="${textile.getName() + ', ' + textile.getType()}">textile</p>
+
+    <div th:if="${textile.getClothes() != null}">
+      <div th:each="cloth : ${textile.getClothes()}">
+        <a th:href="@{/clothes/{id}(id=${cloth.getId()})}"
+           th:text="${cloth.getName()}">cloth</a>
+      </div>
+    </div>
+
+    <div th:if="${textile.getClothes() == null}">
+      <span>такой текстиль никто не выбрал</span>
+    </div>
+
+    <hr/>
+  </div>
+</div>
+
+</body>
+</html>

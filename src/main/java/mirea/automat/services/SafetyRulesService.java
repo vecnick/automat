@@ -1,6 +1,7 @@
 package mirea.automat.services;
 
 import mirea.automat.models.SafetyRule;
+import mirea.automat.models.Textile;
 import mirea.automat.repositories.SafetyRulesRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,10 @@ public class SafetyRulesService {
     @Transactional
     public void delete(int id){
         safetyRulesRepository.deleteById(id);
+    }
+
+    public List<SafetyRule> searchByName(String query) {
+        return safetyRulesRepository.findByNameStartingWith(query);
     }
 
     public void test(){

@@ -2,6 +2,7 @@ package mirea.automat.services;
 
 import mirea.automat.models.Defect;
 import mirea.automat.models.SafetyRule;
+import mirea.automat.models.Textile;
 import mirea.automat.repositories.DefectsRepository;
 import mirea.automat.repositories.SafetyRulesRepository;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,9 @@ public class DefectsService {
         defectsRepository.deleteById(id);
     }
 
+    public List<Defect> searchByName(String query) {
+        return defectsRepository.findByDefectCaseStartingWith(query);
+    }
     public void test(){
         System.out.println("Testing here with debug. Inside Hibernate transaction");
     }

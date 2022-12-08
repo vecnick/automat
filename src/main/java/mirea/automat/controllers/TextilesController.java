@@ -21,7 +21,7 @@ public class TextilesController {
     @GetMapping()
     public String index(Model model) {
         model.addAttribute("textiles", textilesService.findAll());
-        return "textiles/index2";
+        return "textiles/index";
     }
 
     @GetMapping("/{id}")
@@ -66,5 +66,15 @@ public class TextilesController {
     public String delete(@PathVariable("id") int id) {
         textilesService.delete(id);
         return "redirect:/textiles";
+    }
+    @GetMapping("/search")
+    public String searchPage() {
+        return "textiles/search";
+    }
+
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query) {
+        model.addAttribute("textiles", textilesService.searchByName(query));
+        return "textiles/search";
     }
 }

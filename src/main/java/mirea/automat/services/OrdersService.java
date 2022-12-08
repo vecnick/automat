@@ -2,6 +2,7 @@ package mirea.automat.services;
 
 import mirea.automat.models.Order;
 import mirea.automat.models.SafetyRule;
+import mirea.automat.models.Textile;
 import mirea.automat.repositories.OrdersRepository;
 import mirea.automat.repositories.SafetyRulesRepository;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,10 @@ public class OrdersService {
     @Transactional
     public void delete(int id){
         ordersRepository.deleteById(id);
+    }
+
+    public List<Order> searchByName(String query) {
+        return ordersRepository.findByNameStartingWith(query);
     }
 
     public void test(){

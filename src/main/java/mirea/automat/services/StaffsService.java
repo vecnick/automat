@@ -1,6 +1,7 @@
 package mirea.automat.services;
 
 import mirea.automat.models.Staff;
+import mirea.automat.models.Textile;
 import mirea.automat.repositories.StaffsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,10 @@ public class StaffsService {
     @Transactional
     public void delete(int id){
         staffsRepository.deleteById(id);
+    }
+
+    public List<Staff> searchByName(String query) {
+        return staffsRepository.findByNameStartingWith(query);
     }
 
     public void test(){

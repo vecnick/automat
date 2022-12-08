@@ -3,6 +3,7 @@ package mirea.automat.models;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @NoArgsConstructor
@@ -16,7 +17,15 @@ public class Quality {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotEmpty(message = "condition should not be empty")
+    @Column(name = "condition")
+    @NonNull
+    private String condition;
 
+    @NotEmpty(message = "suitability should not be empty")
+    @Column(name = "suitability")
+    @NonNull
+    private String suitability;
 
     @ManyToOne
     @JoinColumn(name="defect_id", referencedColumnName = "id")

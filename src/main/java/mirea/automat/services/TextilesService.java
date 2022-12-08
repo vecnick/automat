@@ -42,6 +42,9 @@ public class TextilesService {
         textilesRepository.deleteById(id);
     }
 
+    public List<Textile> searchByName(String query) {
+        return textilesRepository.findByNameStartingWith(query);
+    }
     public void test(){
         System.out.println("Testing here with debug. Inside Hibernate transaction");
     }

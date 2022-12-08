@@ -2,6 +2,7 @@ package mirea.automat.services;
 
 import mirea.automat.models.Position;
 import mirea.automat.models.SafetyRule;
+import mirea.automat.models.Textile;
 import mirea.automat.repositories.PositionsRepository;
 import mirea.automat.repositories.SafetyRulesRepository;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,9 @@ public class PositionsService {
         positionsRepository.deleteById(id);
     }
 
+    public List<Position> searchByName(String query) {
+        return positionsRepository.findByNameStartingWith(query);
+    }
     public void test(){
         System.out.println("Testing here with debug. Inside Hibernate transaction");
     }
