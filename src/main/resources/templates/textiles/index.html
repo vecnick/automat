@@ -12,7 +12,7 @@
 
 <div th:each="textile : ${textiles}">
     <a th:href="@{/textiles/{id}(id=${textile.getId()})}"
-       th:text="${textile.getName()}">textile</a>
+       th:text="${textile.getName() + ', ' + textile.getType()}">textile</a>
 </div>
 <br/>
 <hr/>

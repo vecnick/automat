@@ -19,8 +19,13 @@ public class TextilesController {
     }
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("textiles", textilesService.findAll());
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "count", required = false) Integer textilesPerPage,
+                        @RequestParam(value = "sort", required = false) boolean sortByType) {
+        if (page == null || textilesPerPage == null)
+            model.addAttribute("textiles", textilesService.findAll(sortByType));
+        else
+            model.addAttribute("textiles", textilesService.findWithPagination(page, textilesPerPage, sortByType));
         return "textiles/index";
     }
 

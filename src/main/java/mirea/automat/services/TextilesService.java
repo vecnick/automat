@@ -2,6 +2,8 @@ package mirea.automat.services;
 
 import mirea.automat.models.Textile;
 import mirea.automat.repositories.TextilesRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,20 @@ public class TextilesService {
 
     public List<Textile> findAll(){
         return textilesRepository.findAll();
+    }
+
+    public List<Textile> findAll(boolean sortByType) {
+        if (sortByType)
+            return textilesRepository.findAll(Sort.by("type"));
+        else
+            return textilesRepository.findAll();
+    }
+
+    public List<Textile> findWithPagination(Integer page, Integer statusesPerPage, boolean sortByType) {
+        if (sortByType)
+            return textilesRepository.findAll(PageRequest.of(page, statusesPerPage, Sort.by("type"))).getContent();
+        else
+            return textilesRepository.findAll(PageRequest.of(page, statusesPerPage)).getContent();
     }
 
     public Textile findOne(int id){
