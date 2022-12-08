@@ -21,7 +21,7 @@ public class TextilesController {
     @GetMapping()
     public String index(Model model) {
         model.addAttribute("textiles", textilesService.findAll());
-        return "textiles/index";
+        return "textiles/index2";
     }
 
     @GetMapping("/{id}")

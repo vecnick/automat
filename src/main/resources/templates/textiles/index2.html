@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="ru" xmlns:th="http//www.thymeleaf.org"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="SoloZneakers">
+    <meta name="description" content="">
+    <title>Все текстили</title>
+    <link rel="stylesheet" href="/public/index.css" media="screen">
+    <link rel="stylesheet" href="/public/button.css" media="screen">
+    <!--    <script class="u-script" type="text/javascript" src="jquery-1.9.1.min.js" defer=""></script>-->
+    <!--    <script class="u-script" type="text/javascript" src="index.js" defer=""></script>-->
+    <meta name="generator" content="Nicepage 5.1.0, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700,700i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+
+
+    <script type="application/ld+json">{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "",
+        "logo": "https://sun9-83.userapi.com/impg/VRYAbsYfQDOS6W9ieaGroZR0-r407icbCKKDqg/7jnTZYdFVwk.jpg?size=512x512&quality=95&sign=70b3631570d8994e3f71a495e8e35e96&type=album",
+        "sameAs": []
+    }</script>
+    <meta name="theme-color" content="#17cad0">
+    <meta property="og:title" content="Все текстили">
+    <meta property="og:type" content="website">
+</head>
+<body class="u-body u-xl-mode" data-lang="ru"><header class="u-clearfix u-header u-white u-header" id="sec-d5ff"><div class="u-clearfix u-sheet u-sheet-1">
+    <a href="ГЛАВНАЯ СТРАНИЧКА" class="u-align-left u-image u-logo u-image-1" data-image-width="512" data-image-height="512">
+        <img src="https://sun9-83.userapi.com/impg/VRYAbsYfQDOS6W9ieaGroZR0-r407icbCKKDqg/7jnTZYdFVwk.jpg?size=512x512&quality=95&sign=70b3631570d8994e3f71a495e8e35e96&type=album" class="u-logo-image u-logo-image-1">
+    </a>
+    <h3 class="u-headline u-text u-text-1">
+        <a href="/">Zneakers<br>
+        </a>
+    </h3>
+    <a href="КНОПКА НАЗАД НА ГЛАВНУЮ СТРАНИЧКУ" class="u-border-2 u-border-grey-75 u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1">назад</a>
+</div></header>
+<section class="u-clearfix u-expanded-width-lg u-expanded-width-md u-expanded-width-xl u-image u-section-1" id="carousel_c23b">
+    <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+        <div class="u-layout">
+            <div class="u-layout-row">
+                <div class="u-container-style u-layout-cell u-left-cell u-palette-5-light-2 u-size-60 u-layout-cell-1">
+                    <div class="u-container-layout">
+                        <div class="u-border-6 u-border-white u-container-align-center u-container-style u-group u-group-1">
+                            <div class="u-container-layout u-container-layout-2">
+                                <h1 class="u-align-center u-text u-title u-text-1">Текстиль</h1>
+                            </div>
+                        </div>
+                        <div th:each="textiles : ${textile}">
+                            <a th:href="@{/textiles/{id}(id=${textile.getId()})}"
+                               th:text="${textile.getName() + ', ' + book.getType()}">Текстиль</a>
+                            <p class="u-align-left u-text u-text-default u-text-2">id, текстиль, описание</p>
+                        </div>
+
+                        <a href="/textiles/new" class="u-border-2 u-border-grey-75 u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-1-base u-radius-50 u-btn-1">Добавить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="u-backlink u-clearfix u-grey-80">
+    <span>Website Templates</span>
+    </a>
+    <p class="u-text">
+        <span>created with</span>
+    </p>
+    <span>Evgeny</span>
+
+    </a>.
+</section>
+
+</body></html>
