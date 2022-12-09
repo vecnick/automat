@@ -6,12 +6,55 @@
 </head>
 <body>
 
-<p th:text="${textile.getName() + ', ' + textile.getType()}">textile</p>
-<form th:method="GET" th:action="@{/textiles/{id}/edit(id=${textile.getId()})}">
+<p th:text="${cloth.getName() + ', ' + cloth.getSize()}">Cloth</p>
+
+
+<div th:if="${owner}">
+    <span>Текстиль: </span> <span th:text="${owner.getName()}">textile Name</span>
+
+    <form th:method="PATCH" th:action="@{/clothes/{id}/releaseTextile(id=${cloth.getId()})}">
+        <input type="submit" value="изменить текстиль"/>
+    </form>
+</div>
+<div th:if="${textiles}">
+    <span>Выберите материал</span>
+    <form th:method="PATCH" th:action="@{/clothes/{id}/assignTextile(id=${cloth.getId()})}">
+        <label for="textile">Выберите материал</label>
+        <select th:object="${textile}" th:field="*{id}" id="textile">
+            <option th:each="textile : ${textiles}" th:value="${textile.getId()}" th:text="${textile.getName()}">
+            </option>
+        </select>
+        <input type="submit" value="Назначить материал"/>
+    </form>
+</div>
+<hr />
+<div th:if="${orders.isEmpty()}">
+    <p>Вещь еще не заказана</p>
+    <hr/>
+</div>
+
+<div th:if="${!orders.isEmpty()}">
+    <hr/>
+    <b>Заказы:</b>
+    <br/>
+    <table th:each="order : ${orders}">
+        <tr>
+            <td>
+                <span th:text="${order.getName() + ', ' + order.getPrice() + ', ' + service.getNds()+ ', ' + service.getDate()}">
+                    order
+                </span>
+            </td>
+        </tr>
+    </table>
+    <hr/>
+</div>
+
+
+<form th:method="GET" th:action="@{/clothes/{id}/edit(id=${cloth.getId()})}">
     <input type="submit" value="Редактировать"/>
 </form>
 <br/>
-<form th:method="DELETE" th:action="@{/textiles/{id}(id=${textile.getId()})}">
+<form th:method="DELETE" th:action="@{/clothes/{id}(id=${cloth.getId()})}">
     <input type="submit" value="Удалить"/>
 </form>
 

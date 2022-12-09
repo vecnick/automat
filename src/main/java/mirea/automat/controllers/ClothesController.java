@@ -1,6 +1,7 @@
 package mirea.automat.controllers;
 
 import mirea.automat.models.Cloth;
+import mirea.automat.models.Textile;
 import mirea.automat.services.ClothesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,6 +73,19 @@ public class ClothesController {
         clothesService.delete(id);
         return "redirect:/clothes";
     }
+
+    @PatchMapping("/{id}/releaseTextile")
+    public String release(@PathVariable("id") int id) {
+        clothesService.releaseTextile(id);
+        return "redirect:/clothes/" + id;
+    }
+
+    @PatchMapping("/{id}/assignTextile")
+    public String assign(@PathVariable("id") int id, @ModelAttribute("textile") Textile selectedTextile) {
+        clothesService.assignTextile(id, selectedTextile);
+        return "redirect:/clothes/" + id;
+    }
+
     @GetMapping("/search")
     public String searchPage() {
         return "clothes/search";

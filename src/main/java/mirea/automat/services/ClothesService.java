@@ -76,6 +76,23 @@ public class ClothesService {
             return Collections.emptyList();
         }
     }
+
+    @Transactional
+    public void releaseTextile(int id){
+        clothesRepository.findById(id).ifPresent(
+                cloth -> {
+                    cloth.setTextile(null);
+                });
+    }
+    @Transactional
+    public void assignTextile(int id, Textile selectedTextile) {
+        clothesRepository.findById(id).ifPresent(
+                cloth -> {
+                    cloth.setTextile(selectedTextile);
+                }
+        );
+    }
+
     public void test(){
         System.out.println("Testing here with debug. Inside Hibernate transaction");
     }

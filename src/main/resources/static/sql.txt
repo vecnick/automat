@@ -74,4 +74,3 @@ Create table Person(
     password varchar NOT NULL
 );
 update person set role= 'ROLE_ADMIN' where id=6;
-INSERT INTO Person(username, year_of_birth, role, password) VALUES ('admin',2000,'ROLE_ADMIN','admin');
