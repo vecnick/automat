@@ -1,12 +1,15 @@
 package mirea.automat.services;
 
+import mirea.automat.models.Cloth;
 import mirea.automat.models.Textile;
 import mirea.automat.repositories.TextilesRepository;
+import org.hibernate.Hibernate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +64,19 @@ public class TextilesService {
     public List<Textile> searchByName(String query) {
         return textilesRepository.findByNameStartingWith(query);
     }
+
+    public List<Cloth> getClothesByTextileId(int id) {
+        Optional<Textile> textile = textilesRepository.findById(id);
+
+        if (textile.isPresent()) {
+            Hibernate.initialize(textile.get().getClothes());
+            return textile.get().getClothes();
+        }
+        else {
+            return Collections.emptyList();
+        }
+    }
+
     public void test(){
         System.out.println("Testing here with debug. Inside Hibernate transaction");
     }

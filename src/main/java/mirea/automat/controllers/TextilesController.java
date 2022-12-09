@@ -32,6 +32,7 @@ public class TextilesController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("textile", textilesService.findOne(id));
+        model.addAttribute("clothes", textilesService.getClothesByTextileId(id));
         return "textiles/show";
     }
 

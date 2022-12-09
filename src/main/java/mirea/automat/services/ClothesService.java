@@ -5,6 +5,9 @@ import mirea.automat.models.SafetyRule;
 import mirea.automat.models.Textile;
 import mirea.automat.repositories.ClothesRepository;
 import mirea.automat.repositories.SafetyRulesRepository;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

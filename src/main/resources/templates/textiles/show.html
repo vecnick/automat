@@ -7,6 +7,29 @@
 <body>
 
 <p th:text="${textile.getName() + ', ' + textile.getType()}">textile</p>
+
+<div th:if="${clothes.isEmpty()}">
+    <p>Такой текстиль еще не выбран</p>
+    <hr/>
+</div>
+
+<div th:if="${!clothes.isEmpty()}">
+    <hr/>
+    <b>Заказы:</b>
+    <br/>
+    <table th:each="cloth : ${clothes}">
+        <tr>
+            <td>
+                <span th:text="${cloth.getName() + ', ' + cloth.getSize()}">
+                    cloth
+                </span>
+            </td>
+        </tr>
+    </table>
+    <hr/>
+</div>
+
+
 <form th:method="GET" th:action="@{/textiles/{id}/edit(id=${textile.getId()})}">
     <input type="submit" value="Редактировать"/>
 </form>
