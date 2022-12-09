@@ -20,14 +20,20 @@ public class PositionsController {
     }
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("positions", positionsService.findAll());
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "count", required = false) Integer positionsPerPage,
+                        @RequestParam(value = "sort", required = false) boolean sortByPositionName) {
+        if (page == null || positionsPerPage == null)
+            model.addAttribute("positions", positionsService.findAll(sortByPositionName));
+        else
+            model.addAttribute("positions", positionsService.findWithPagination(page, positionsPerPage, sortByPositionName));
         return "positions/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("position", positionsService.findOne(id));
+        model.addAttribute("staffs", positionsService.getStaffsByPositionId(id));
         return "positions/show";
     }
 
@@ -68,4 +74,13 @@ public class PositionsController {
         positionsService.delete(id);
         return "redirect:/positions";
     }
+    @GetMapping("/search")
+    public String searchPage() {
+        return "positions/search";
+    }
+
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query) {
+        model.addAttribute("positions", positionsService.searchByName(query));
+        return "positions/search";}
 }

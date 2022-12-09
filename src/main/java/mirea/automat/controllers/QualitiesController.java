@@ -1,5 +1,4 @@
 package mirea.automat.controllers;
-
 import mirea.automat.models.Quality;
 import mirea.automat.services.QualitiesService;
 import org.springframework.stereotype.Controller;
@@ -20,14 +19,20 @@ public class QualitiesController {
     }
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("qualities", qualitiesService.findAll());
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "count", required = false) Integer qualitiesPerPage,
+                        @RequestParam(value = "sort", required = false) boolean sortByCondition) {
+        if (page == null || qualitiesPerPage == null)
+            model.addAttribute("qualities", qualitiesService.findAll(sortByCondition));
+        else
+            model.addAttribute("qualities", qualitiesService.findWithPagination(page, qualitiesPerPage, sortByCondition));
         return "qualities/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("quality", qualitiesService.findOne(id));
+        model.addAttribute("clothes", qualitiesService.getClothesByQualityId(id));
         return "qualities/show";
     }
 
@@ -68,4 +73,13 @@ public class QualitiesController {
         qualitiesService.delete(id);
         return "redirect:/qualities";
     }
+    @GetMapping("/search")
+    public String searchPage() {
+        return "qualities/search";
+    }
+
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query) {
+        model.addAttribute("qualities", qualitiesService.searchByCondition(query));
+        return "qualities/search";}
 }

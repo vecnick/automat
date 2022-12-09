@@ -1,0 +1,120 @@
+
+
+
+<!DOCTYPE html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+
+<html lang="en" xmlns:th="http//www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Все текстили</title>
+
+
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="#">
+                <img src="/public/imgs/letter-s.png" width="30" height="30" class="d-inline-block align-top" alt="">Zneakers
+            </a>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/textiles">Текстиль<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/clothes">Одежда</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/orders">Заказы</a>
+                </li>
+                <li class="nav-item">
+                <li class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+                </li>
+            </ul>
+
+            <ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" th:method="POST">
+                <!--                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+                <button class="btn btn-dark my-2 my-sm-0" type="submit" value="Logout">LogOut</button>
+
+            </form>
+
+        </div>
+    </nav>
+</header>
+<div class="row justify-content-center">
+    <a class="btn btn-info align-right" href="/textiles/new" role="button">Отсортировать</a>
+</div>
+<div class="container-sm">
+
+
+    <div>
+        <table class="table table-striped">
+            <tr  class="bg-info">
+                <th>Номер</th>
+                <th>Название текстиля</th>
+                <th>Описание</th>
+            </tr>
+
+            <tbody id="myTable">
+            <tr th:each="textile : ${textiles}">
+                <!--             <a th:href="@{/textiles/{id}(id=${textile.getId()})}">-->
+
+                <td>
+                    <a th:href="@{/textiles/{id}(id=${textile.getId()})}" th:text="${textile.getId()}" target="_blank" />
+                </td>
+                <!--                 <td th:text="${textile.getId()}">number</td>-->
+
+
+                <td th:text="${textile.getName()}">name</td>
+                <td th:text="${textile.getType()}">desc</td>
+                <!--             </a>-->
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+
+
+<br/>
+<hr/>
+<div class="row justify-content-center">
+    <a class="btn btn-info align-middle" href="/textiles/new" role="button">Добавить текстиль</a>
+</div>
+
+
+
+</body>
+</html>

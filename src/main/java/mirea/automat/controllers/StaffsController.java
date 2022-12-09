@@ -17,16 +17,22 @@ public class StaffsController {
     public StaffsController(StaffsService staffsService) {
         this.staffsService = staffsService;
     }
-
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("staffs", staffsService.findAll());
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "count", required = false) Integer staffsPerPage,
+                        @RequestParam(value = "sort", required = false) boolean sortBySecondname) {
+        if (page == null || staffsPerPage == null)
+            model.addAttribute("staffs", staffsService.findAll(sortBySecondname));
+        else
+            model.addAttribute("staffs", staffsService.findWithPagination(page, staffsPerPage, sortBySecondname));
         return "staffs/index";
     }
+
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("staff", staffsService.findOne(id));
+        model.addAttribute("orders", staffsService.getOrdersByStaffId(id));
         return "staffs/show";
     }
 
@@ -66,5 +72,16 @@ public class StaffsController {
     public String delete(@PathVariable("id") int id) {
         staffsService.delete(id);
         return "redirect:/staffs";
+    }
+
+    @GetMapping("/search")
+    public String searchPage() {
+        return "staffs/search";
+    }
+
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query) {
+        model.addAttribute("staffs", staffsService.searchByName(query));
+        return "staffs/search";
     }
 }

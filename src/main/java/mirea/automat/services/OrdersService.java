@@ -1,10 +1,13 @@
 package mirea.automat.services;
 
 import mirea.automat.models.Order;
+import mirea.automat.models.Producer;
 import mirea.automat.models.SafetyRule;
 import mirea.automat.models.Textile;
 import mirea.automat.repositories.OrdersRepository;
 import mirea.automat.repositories.SafetyRulesRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +25,20 @@ public class OrdersService {
 
     public List<Order> findAll(){
         return ordersRepository.findAll();
+    }
+
+    public List<Order> findAll(boolean sortByName) {
+        if (sortByName)
+            return ordersRepository.findAll(Sort.by("name"));
+        else
+            return ordersRepository.findAll();
+    }
+
+    public List<Order> findWithPagination(Integer page, Integer ordersPerPage, boolean sortByName) {
+        if (sortByName)
+            return ordersRepository.findAll(PageRequest.of(page, ordersPerPage, Sort.by("name"))).getContent();
+        else
+            return ordersRepository.findAll(PageRequest.of(page, ordersPerPage)).getContent();
     }
 
     public Order findOne(int id){

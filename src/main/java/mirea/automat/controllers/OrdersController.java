@@ -17,10 +17,14 @@ public class OrdersController {
     public OrdersController(OrdersService ordersService) {
         this.ordersService = ordersService;
     }
-
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("orders", ordersService.findAll());
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "count", required = false) Integer ordersPerPage,
+                        @RequestParam(value = "sort", required = false) boolean sortByName) {
+        if (page == null || ordersPerPage == null)
+            model.addAttribute("orders", ordersService.findAll(sortByName));
+        else
+            model.addAttribute("orders", ordersService.findWithPagination(page, ordersPerPage, sortByName));
         return "orders/index";
     }
 
@@ -67,4 +71,14 @@ public class OrdersController {
         ordersService.delete(id);
         return "redirect:/orders";
     }
+
+    @GetMapping("/search")
+    public String searchPage() {
+        return "orders/search";
+    }
+
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query) {
+        model.addAttribute("orders", ordersService.searchByName(query));
+        return "orders/search";}
 }

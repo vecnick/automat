@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Новый текстиль</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/textiles}" th:object="${textile}">
+    <label for="name">Введите название текстиля: </label>
+    <input type="text" th:field="*{name}" id="name">
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+    <br/>
+    <br/>
+    <label for="type">Опишите текстиль: </label>
+    <input type="text" th:field="*{type}" id="type">
+    <div style="color:red" th:if="${#fields.hasErrors('type')}" th:errors="*{author}">type error</div>
+    <br/>
+
+    <input type="submit" value="Создать"/>
+</form>
+
+</body>
+</html>

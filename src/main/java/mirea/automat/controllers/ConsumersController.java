@@ -18,16 +18,21 @@ public class ConsumersController {
     public ConsumersController(ConsumersService consumersService) {
         this.consumersService = consumersService;
     }
-
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("consumers", consumersService.findAll());
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "count", required = false) Integer consumersPerPage,
+                        @RequestParam(value = "sort", required = false) boolean sortBySecondName) {
+        if (page == null || consumersPerPage == null)
+            model.addAttribute("consumers", consumersService.findAll(sortBySecondName));
+        else
+            model.addAttribute("consumers", consumersService.findWithPagination(page, consumersPerPage, sortBySecondName));
         return "consumers/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("consumer", consumersService.findOne(id));
+        model.addAttribute("orders", consumersService.getOrdersByConsumerId(id));
         return "consumers/show";
     }
 

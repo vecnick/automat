@@ -13,21 +13,27 @@ import javax.validation.Valid;
 @RequestMapping("/defects")
 public class DefectsController {
 
-    private final DefectsService staffsService;
+    private final DefectsService defectsService;
 
-    public DefectsController(DefectsService staffsService) {
-        this.staffsService = staffsService;
+    public DefectsController(DefectsService defectsService) {
+        this.defectsService = defectsService;
     }
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("defects", staffsService.findAll());
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "count", required = false) Integer defectsPerPage,
+                        @RequestParam(value = "sort", required = false) boolean sortByDefectCase) {
+        if (page == null || defectsPerPage == null)
+            model.addAttribute("defects", defectsService.findAll(sortByDefectCase));
+        else
+            model.addAttribute("defects", defectsService.findWithPagination(page, defectsPerPage, sortByDefectCase));
         return "defects/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("defect", staffsService.findOne(id));
+        model.addAttribute("defect", defectsService.findOne(id));
+        model.addAttribute("qualities", defectsService.getQualitiesByDefectId(id));
         return "defects/show";
     }
 
@@ -43,13 +49,13 @@ public class DefectsController {
         if (bindingResult.hasErrors())
             return "defects/new";
 
-        staffsService.save(defect);
+        defectsService.save(defect);
         return "redirect:/defects";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("defect", staffsService.findOne(id));
+        model.addAttribute("defect", defectsService.findOne(id));
         return "defects/edit";
     }
 
@@ -59,13 +65,22 @@ public class DefectsController {
         if (bindingResult.hasErrors())
             return "defects/edit";
 
-        staffsService.update(id, defect);
+        defectsService.update(id, defect);
         return "redirect:/defects";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        staffsService.delete(id);
+        defectsService.delete(id);
         return "redirect:/defects";
     }
+    @GetMapping("/search")
+    public String searchPage() {
+        return "defects/search";
+    }
+
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query) {
+        model.addAttribute("defects", defectsService.searchByName(query));
+        return "defects/search";}
 }

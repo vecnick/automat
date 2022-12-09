@@ -19,16 +19,22 @@ public class SafetyRulesController {
     public SafetyRulesController(SafetyRulesService safetyRulesService) {
         this.safetyRulesService = safetyRulesService;
     }
-
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("safetyRules", safetyRulesService.findAll());
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "count", required = false) Integer safetyRulesPerPage,
+                        @RequestParam(value = "sort", required = false) boolean sortByRuleName) {
+        if (page == null || safetyRulesPerPage == null)
+            model.addAttribute("safetyRules", safetyRulesService.findAll(sortByRuleName));
+        else
+            model.addAttribute("safetyRules", safetyRulesService.findWithPagination(page, safetyRulesPerPage, sortByRuleName));
         return "safetyRules/index";
     }
+
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("safetyRule", safetyRulesService.findOne(id));
+        model.addAttribute("staffs", safetyRulesService.getStaffsBySafetyRuleId(id));
         return "safetyRules/show";
     }
 
@@ -68,5 +74,16 @@ public class SafetyRulesController {
     public String delete(@PathVariable("id") int id) {
         safetyRulesService.delete(id);
         return "redirect:/safetyRules";
+    }
+
+    @GetMapping("/search")
+    public String searchPage() {
+        return "safetyRules/search";
+    }
+
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query) {
+        model.addAttribute("safetyRules", safetyRulesService.searchByName(query));
+        return "safetyRules/search";
     }
 }

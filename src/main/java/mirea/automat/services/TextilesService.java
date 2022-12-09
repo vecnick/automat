@@ -62,6 +62,7 @@ public class TextilesService {
     }
 
     public List<Textile> searchByName(String query) {
+
         return textilesRepository.findByNameStartingWith(query);
     }
 
@@ -76,8 +77,8 @@ public class TextilesService {
             return Collections.emptyList();
         }
     }
-
     public void test(){
         System.out.println("Testing here with debug. Inside Hibernate transaction");
+
     }
 }

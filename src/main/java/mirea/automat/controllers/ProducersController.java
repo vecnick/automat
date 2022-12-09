@@ -18,16 +18,21 @@ public class ProducersController {
     public ProducersController(ProducersService producersService) {
         this.producersService = producersService;
     }
-
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("producers", producersService.findAll());
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "count", required = false) Integer producersPerPage,
+                        @RequestParam(value = "sort", required = false) boolean sortByName) {
+        if (page == null || producersPerPage == null)
+            model.addAttribute("producers", producersService.findAll(sortByName));
+        else
+            model.addAttribute("producers", producersService.findWithPagination(page, producersPerPage, sortByName));
         return "producers/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("producer", producersService.findOne(id));
+        model.addAttribute("clothes", producersService.getClothesByProducerId(id));
         return "producers/show";
     }
 
@@ -68,4 +73,13 @@ public class ProducersController {
         producersService.delete(id);
         return "redirect:/producers";
     }
+    @GetMapping("/search")
+    public String searchPage() {
+        return "producers/search";
+    }
+
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query) {
+        model.addAttribute("producers", producersService.searchByName(query));
+        return "producers/search";}
 }

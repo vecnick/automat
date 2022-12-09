@@ -19,18 +19,25 @@ public class GostsController {
     public GostsController(GostsService gostsService) {
         this.gostsService = gostsService;
     }
-
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("gosts", gostsService.findAll());
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "count", required = false) Integer gostsPerPage,
+                        @RequestParam(value = "sort", required = false) boolean sortByName) {
+        if (page == null || gostsPerPage == null)
+            model.addAttribute("gosts", gostsService.findAll(sortByName));
+        else
+            model.addAttribute("gosts", gostsService.findWithPagination(page, gostsPerPage, sortByName));
         return "gosts/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("gost", gostsService.findOne(id));
-        return "gosts/show";
+        model.addAttribute("qualities", gostsService.getQualitiesByGostId(id));
+        model.addAttribute("clothes", gostsService.getClothesByGostId(id));
+        return "qualities/show";
     }
+
 
     @GetMapping("/new")
     public String newStaff(@ModelAttribute("gost") Gost gost) {
@@ -69,4 +76,14 @@ public class GostsController {
         gostsService.delete(id);
         return "redirect:/gosts";
     }
+    @GetMapping("/search")
+    public String searchPage() {
+        return "gosts/search";
+    }
+
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query) {
+        model.addAttribute("gosts", gostsService.searchByName(query));
+        return "gosts/search";}
 }
+

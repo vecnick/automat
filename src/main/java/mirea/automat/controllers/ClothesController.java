@@ -17,17 +17,21 @@ public class ClothesController {
     public ClothesController(ClothesService clothesService) {
         this.clothesService = clothesService;
     }
-
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("clothes", clothesService.findAll());
-        System.out.println(clothesService.findAll());
+    public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "count", required = false) Integer clothesPerPage,
+                        @RequestParam(value = "sort", required = false) boolean sortBySize) {
+        if (page == null || clothesPerPage == null)
+            model.addAttribute("clothes", clothesService.findAll(sortBySize));
+        else
+            model.addAttribute("clothes", clothesService.findWithPagination(page, clothesPerPage, sortBySize));
         return "clothes/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("cloth", clothesService.findOne(id));
+        model.addAttribute("orders", clothesService.getOrdersByClothId(id));
         return "clothes/show";
     }
 
@@ -68,4 +72,13 @@ public class ClothesController {
         clothesService.delete(id);
         return "redirect:/clothes";
     }
+    @GetMapping("/search")
+    public String searchPage() {
+        return "clothes/search";
+    }
+
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query") String query) {
+        model.addAttribute("clothes", clothesService.searchByName(query));
+        return "clothes/search";}
 }
