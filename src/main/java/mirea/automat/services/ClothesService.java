@@ -70,11 +70,16 @@ public class ClothesService {
 
         if (cloth.isPresent()) {
             Hibernate.initialize(cloth.get().getOrders());
+
             return cloth.get().getOrders();
         }
         else {
             return Collections.emptyList();
         }
+    }
+
+    public Textile getClothOwner(int id) {
+        return clothesRepository.findById(id).map(Cloth::getTextile).orElse(null);
     }
 
     @Transactional

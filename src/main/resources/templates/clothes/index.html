@@ -1,25 +1,15 @@
-
-
-
 <!DOCTYPE html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-
-
-
 <html lang="en" xmlns:th="http//www.thymeleaf.org">
 <head>
-
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Все текстили</title>
-
 
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -40,80 +30,105 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/orders">Заказы</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Дополнительно
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/staffs">Сотрудники</a>
+                        <a class="dropdown-item" href="/safetyRules">Правила</a>
+                        <a class="dropdown-item" href="/qualities">Качество</a>
+                        <a class="dropdown-item" href="/producers">Производители</a>
+                        <a class="dropdown-item" href="/positions">Должности</a>
+                        <a class="dropdown-item" href="/gosts">ГОСТы</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/defects">Дефекты</a>
+                        <a class="dropdown-item" href="/consumers">Покупатели</a>
+                        <a class="dropdown-item" href="/positions">Должности</a>
+                    </div>
+                </li>
+                <li class="nav-item justify-content-center">
                 <li class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 
                 </li>
+
             </ul>
 
-            <ul>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" th:method="POST">
-                <!--                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
-                <button class="btn btn-dark my-2 my-sm-0" type="submit" value="Logout">LogOut</button>
+            <!--            <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" th:method="POST">-->
+            <!--                &lt;!&ndash;                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">&ndash;&gt;-->
+            <!--                <button class="btn btn-dark my-2 my-sm-0" type="submit" value="Logout">LogOut</button>-->
 
+            <!--&lt;!&ndash;            </form>&ndash;&gt;      ЭТО КНОПКА ВЫХОДА-->
+            <form  th:action="@{/users/profile}">
+                <button class="btn btn-dark my-2 my-sm-0" type="submit">Профиль</button>
             </form>
-
         </div>
     </nav>
 </header>
-<div class="row justify-content-center">
-    <a class="btn btn-info align-right" href="/textiles/new" role="button">Отсортировать</a>
-</div>
+
 <div class="container-sm">
-
-
     <div>
         <table class="table table-striped">
             <tr  class="bg-info">
                 <th>Номер</th>
-                <th>Название текстиля</th>
-                <th>Описание</th>
+                <th>Название одежды</th>
+                <th>Размер</th>
+                <th>id Текстиля</th>
+                <th>id Качества</th>
+                <th>id Госта</th>
             </tr>
-
             <tbody id="myTable">
-            <tr th:each="textile : ${textiles}">
-                <!--             <a th:href="@{/textiles/{id}(id=${textile.getId()})}">-->
-
+            <tr th:each="cloth : ${clothes}">
                 <td>
-                    <a th:href="@{/textiles/{id}(id=${textile.getId()})}" th:text="${textile.getId()}" target="_blank" />
+                    <a th:href="@{/clothes/{id}(id=${cloth.getId()})}" th:text="${cloth.getId()}" target="_blank" />
                 </td>
-                <!--                 <td th:text="${textile.getId()}">number</td>-->
-
-
-                <td th:text="${textile.getName()}">name</td>
-                <td th:text="${textile.getType()}">desc</td>
-                <!--             </a>-->
+                <td th:text="${cloth.getName()}">name</td>
+                <td th:text="${cloth.getSize()}">size</td>
+                <td th:text="${cloth.getProducer()}">idProducer</td>
+                <td th:text="${cloth.getTextile()}">idTextile</td>
+                <td th:text="${cloth.getQuality()}">idQuality</td>
+                <td th:text="${cloth.getGost()}">idGost</td>
             </tr>
-
             </tbody>
         </table>
     </div>
 
 </div>
+<br/>
+<hr/>
 
-
-
-
+<div class="row justify-content-center">
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a class="btn btn-info align-middle" href="/clothes/new" role="button">Добавить одежду</a>
+        <button type="button" class="btn btn-info">Отсортировать</button>
+        <div class="btn-group" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Количество записей
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#">10 записей</a>
+                <a class="dropdown-item" href="#">20 записей</a>
+                <a class="dropdown-item" href="#">30 записей</a>
+                <a class="dropdown-item" href="#">Все записи</a>
+            </div>
+        </div>
+    </div>
+</div>
 <br/>
 <hr/>
 <div class="row justify-content-center">
-    <a class="btn btn-info align-middle" href="/textiles/new" role="button">Добавить текстиль</a>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </nav>
 </div>
-
 
 
 </body>

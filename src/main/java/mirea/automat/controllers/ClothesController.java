@@ -3,6 +3,7 @@ package mirea.automat.controllers;
 import mirea.automat.models.Cloth;
 import mirea.automat.models.Textile;
 import mirea.automat.services.ClothesService;
+import mirea.automat.services.TextilesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,9 +15,11 @@ import javax.validation.Valid;
 @RequestMapping("/clothes")
 public class ClothesController {
     private final ClothesService clothesService;
+    private final TextilesService textilesService;
 
-    public ClothesController(ClothesService clothesService) {
+    public ClothesController(ClothesService clothesService, TextilesService textilesService) {
         this.clothesService = clothesService;
+        this.textilesService = textilesService;
     }
     @GetMapping()
     public String index(Model model, @RequestParam(value = "page", required = false) Integer page,
@@ -33,6 +36,13 @@ public class ClothesController {
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("cloth", clothesService.findOne(id));
         model.addAttribute("orders", clothesService.getOrdersByClothId(id));
+        Textile owner = clothesService.getClothOwner(id);
+
+        if (owner != null)
+            model.addAttribute("owner", owner);
+        else
+            model.addAttribute("textiles", textilesService.findAll());
+
         return "clothes/show";
     }
 
