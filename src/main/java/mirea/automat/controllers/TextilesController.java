@@ -81,6 +81,6 @@ public class TextilesController {
     @PostMapping("/search")
     public String makeSearch(Model model, @RequestParam("query") String query) {
         model.addAttribute("textiles", textilesService.searchByName(query));
-        return "textiles/search";
+        return "textiles/index";
     }
 }
