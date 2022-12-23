@@ -1,5 +1,6 @@
 Учебный проект (разработка бд + приложения)
 Spring (Boot + MVC + Data + Security) + postgresql + thymeleaf + lombok
+sql код бд в статических ресурсах
 
 БД:
 ![image](https://user-images.githubusercontent.com/73351701/209378066-f6ea4a30-2d49-4679-839c-aedb9ccbccf4.png)
